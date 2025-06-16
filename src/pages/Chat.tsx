@@ -1,12 +1,12 @@
-
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, MessageCircle } from "lucide-react";
+import { Send, Bot, User, MessageCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
+import ScrollingBackground from "@/components/ScrollingBackground";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
@@ -92,13 +92,21 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen relative flex flex-col">
-      <AnimatedBackground />
+      <ScrollingBackground />
       <Navbar />
       
-      <main className="flex-1 container mx-auto px-4 py-8 relative">
+      <main className="flex-1 container mx-auto px-4 py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
+          {/* Back Button */}
+          <div className="mb-8">
+            <Link to="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Home
+            </Link>
+          </div>
+
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               AI Mental Health <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Companion</span>
             </h1>
@@ -108,7 +116,7 @@ const Chat = () => {
           </div>
 
           {/* Chat Container */}
-          <Card className="bg-white/90 backdrop-blur-md shadow-2xl border-0">
+          <Card className="bg-white/90 backdrop-blur-md shadow-2xl border-0 animate-scale-in">
             <CardHeader className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-3">
                 <MessageCircle className="h-6 w-6" />
@@ -187,8 +195,41 @@ const Chat = () => {
             </CardContent>
           </Card>
 
+          {/* Navigation Cards */}
+          <div className="mt-8 grid md:grid-cols-3 gap-4">
+            <Link to="/assessment" className="group">
+              <Card className="bg-white/60 backdrop-blur-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <MessageCircle className="h-8 w-8 mx-auto mb-2 text-blue-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-gray-800 mb-1">Take Assessment</h4>
+                  <p className="text-sm text-gray-600">Evaluate your mental wellness</p>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/resources" className="group">
+              <Card className="bg-white/60 backdrop-blur-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <MessageCircle className="h-8 w-8 mx-auto mb-2 text-green-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-gray-800 mb-1">Resources</h4>
+                  <p className="text-sm text-gray-600">Professional help & tools</p>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/contact" className="group">
+              <Card className="bg-white/60 backdrop-blur-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <MessageCircle className="h-8 w-8 mx-auto mb-2 text-purple-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-gray-800 mb-1">Contact</h4>
+                  <p className="text-sm text-gray-600">Get in touch with us</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+
           {/* Disclaimer */}
-          <div className="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-6 text-center">
+          <div className="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-6 text-center animate-fade-in">
             <p className="text-amber-800 text-sm">
               <strong>Important:</strong> This AI companion provides emotional support but is not a replacement for professional therapy. 
               If you're experiencing a mental health crisis, please contact emergency services or call 988 (Suicide & Crisis Lifeline).

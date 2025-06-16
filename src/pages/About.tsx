@@ -1,9 +1,10 @@
 
-import { Shield, Heart, Brain, Users, Award, Zap } from "lucide-react";
+import { Shield, Heart, Brain, Users, Award, Zap, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
+import ScrollingBackground from "@/components/ScrollingBackground";
 
 const About = () => {
   const features = [
@@ -47,12 +48,20 @@ const About = () => {
 
   return (
     <div className="min-h-screen relative">
-      <AnimatedBackground />
+      <ScrollingBackground />
       <Navbar />
       
-      <main className="container mx-auto px-4 py-20 relative">
+      <main className="container mx-auto px-4 py-20 relative z-10">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Link to="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+        </div>
+
         {/* Hero Section */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
             About <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">MindCare AI</span>
           </h1>
@@ -62,7 +71,7 @@ const About = () => {
         </div>
 
         {/* Mission Section */}
-        <section className="mb-20">
+        <section className="mb-20 animate-scale-in">
           <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-12 text-white relative overflow-hidden">
             <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
             <div className="relative z-10 text-center">
@@ -78,14 +87,14 @@ const About = () => {
 
         {/* Features Grid */}
         <section className="mb-20">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
+          <h2 className="text-4xl font-bold text-center text-gray-800 mb-12 animate-fade-in">
             Why Choose <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">MindCare AI</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <Card key={index} className="hover:shadow-2xl transition-all duration-500 transform hover:scale-105 bg-white/80 backdrop-blur-sm group">
+                <Card key={index} className="hover:shadow-2xl transition-all duration-500 transform hover:scale-105 bg-white/80 backdrop-blur-sm group animate-scale-in">
                   <CardHeader className="text-center">
                     <div className={`mx-auto p-4 bg-gradient-to-r from-${feature.color}-400 to-${feature.color}-600 rounded-2xl w-fit mb-4 group-hover:animate-pulse`}>
                       <IconComponent className="h-8 w-8 text-white" />
@@ -104,7 +113,7 @@ const About = () => {
         </section>
 
         {/* Stats Section */}
-        <section className="text-center mb-20">
+        <section className="text-center mb-20 animate-fade-in">
           <h2 className="text-4xl font-bold text-gray-800 mb-12">Impact & Trust</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -113,7 +122,7 @@ const About = () => {
               { number: "24/7", label: "Availability" },
               { number: "100%", label: "Privacy Protected" }
             ].map((stat, index) => (
-              <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:scale-105 animate-scale-in">
                 <div className="text-4xl font-bold text-blue-600 mb-2">{stat.number}</div>
                 <div className="text-gray-600 font-medium">{stat.label}</div>
               </div>
@@ -121,8 +130,44 @@ const About = () => {
           </div>
         </section>
 
+        {/* Navigation Cards */}
+        <section className="mb-20">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Explore More</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link to="/assessment" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-6 text-center">
+                  <Brain className="h-12 w-12 mx-auto mb-4 text-blue-600 group-hover:animate-pulse" />
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Take Assessment</h3>
+                  <p className="text-gray-600">Start your mental health journey</p>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/chat" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-6 text-center">
+                  <Heart className="h-12 w-12 mx-auto mb-4 text-pink-600 group-hover:animate-pulse" />
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">AI Support Chat</h3>
+                  <p className="text-gray-600">Get instant support and guidance</p>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/resources" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-6 text-center">
+                  <Users className="h-12 w-12 mx-auto mb-4 text-green-600 group-hover:animate-pulse" />
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Resources</h3>
+                  <p className="text-gray-600">Access professional resources</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </section>
+
         {/* Disclaimer */}
-        <section className="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-center">
+        <section className="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-center animate-scale-in">
           <div className="flex items-center justify-center mb-4">
             <Shield className="h-8 w-8 text-amber-600 mr-3" />
             <h3 className="text-2xl font-bold text-amber-800">Important Disclaimer</h3>

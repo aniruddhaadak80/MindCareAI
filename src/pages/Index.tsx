@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +8,7 @@ import AssessmentForm from "@/components/AssessmentForm";
 import ResultsDisplay from "@/components/ResultsDisplay";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
+import ScrollingBackground from "@/components/ScrollingBackground";
 
 export interface AssessmentResult {
   overallScore: number;
@@ -49,29 +50,29 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative">
-      <AnimatedBackground />
+      <ScrollingBackground />
       <Navbar />
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 relative">
+      <section className="container mx-auto px-4 py-20 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
           <div className="inline-block p-2 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full mb-6 animate-bounce">
             <Sparkles className="h-8 w-8 text-blue-600" />
           </div>
           
-          <h2 className="text-5xl md:text-7xl font-bold text-gray-800 mb-8 leading-tight">
+          <h2 className="text-5xl md:text-7xl font-bold text-gray-800 mb-8 leading-tight animate-fade-in">
             AI-Powered Mental Health
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent block animate-pulse">
               Assessment & Support
             </span>
           </h2>
           
-          <p className="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto animate-fade-in">
             Discover personalized insights into your mental wellness with our comprehensive AI-driven screening tool. 
             Take the first step towards better mental health with professional recommendations and continuous support.
           </p>
           
-          <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 mb-12 max-w-3xl mx-auto shadow-lg animate-pulse">
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 mb-12 max-w-3xl mx-auto shadow-lg animate-scale-in">
             <div className="flex items-center justify-center mb-3">
               <Shield className="h-6 w-6 text-amber-600 mr-2" />
               <strong className="text-amber-800">Privacy & Safety First</strong>
@@ -82,15 +83,16 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Button 
-              onClick={handleStartAssessment}
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
-            >
-              <Zap className="h-6 w-6 mr-3 animate-pulse" />
-              Start Your Journey
-            </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in">
+            <Link to="/assessment">
+              <Button 
+                size="lg"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              >
+                <Zap className="h-6 w-6 mr-3 animate-pulse" />
+                Start Assessment
+              </Button>
+            </Link>
             
             <Link to="/chat">
               <Button 
@@ -124,7 +126,7 @@ const Index = () => {
             ].map((stat, index) => {
               const IconComponent = stat.icon;
               return (
-                <div key={index} className="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div key={index} className="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 animate-scale-in">
                   <IconComponent className="h-8 w-8 text-blue-600 mx-auto mb-3 animate-pulse" />
                   <div className="text-3xl font-bold text-gray-800 mb-1">{stat.number}</div>
                   <div className="text-sm text-gray-600">{stat.label}</div>
@@ -136,8 +138,8 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="container mx-auto px-4 py-20 relative">
-        <div className="text-center mb-16">
+      <section id="features" className="container mx-auto px-4 py-20 relative z-10">
+        <div className="text-center mb-16 animate-fade-in">
           <h3 className="text-4xl font-bold text-gray-800 mb-6">
             Why Choose <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">MindCare AI?</span>
           </h3>
@@ -179,7 +181,7 @@ const Index = () => {
           ].map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <Card key={index} className={`border-${feature.color}-100 hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 bg-white/80 backdrop-blur-sm group`}>
+              <Card key={index} className={`border-${feature.color}-100 hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 bg-white/80 backdrop-blur-sm group animate-scale-in`}>
                 <CardHeader className="text-center pb-4">
                   <div className={`mx-auto p-4 bg-gradient-to-r ${feature.gradient} rounded-2xl w-fit mb-4 shadow-lg group-hover:animate-pulse`}>
                     <IconComponent className="h-8 w-8 text-white" />
@@ -198,7 +200,7 @@ const Index = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-20 overflow-hidden z-10">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></div>
         <div className="absolute inset-0 bg-black/20"></div>
         
@@ -213,19 +215,20 @@ const Index = () => {
           <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 animate-fade-in">
             Ready to Begin Your Wellness Journey?
           </h3>
-          <p className="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed animate-fade-in">
             Take our comprehensive assessment and receive personalized recommendations for your mental health. 
             Your journey to better wellness starts with a single click.
           </p>
-          <Button 
-            onClick={handleStartAssessment}
-            size="lg"
-            variant="secondary"
-            className="bg-white text-purple-700 hover:bg-blue-50 px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-2"
-          >
-            <MessageSquare className="h-6 w-6 mr-3 animate-bounce" />
-            Start Your Assessment Now
-          </Button>
+          <Link to="/assessment">
+            <Button 
+              size="lg"
+              variant="secondary"
+              className="bg-white text-purple-700 hover:bg-blue-50 px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 animate-scale-in"
+            >
+              <MessageSquare className="h-6 w-6 mr-3 animate-bounce" />
+              Start Your Assessment Now
+            </Button>
+          </Link>
         </div>
       </section>
 

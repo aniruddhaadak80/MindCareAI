@@ -1,13 +1,13 @@
-
-import { Mail, MessageCircle, MapPin, Clock, Send, Phone } from "lucide-react";
+import { Mail, MessageCircle, MapPin, Clock, Send, Phone, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
+import ScrollingBackground from "@/components/ScrollingBackground";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -59,12 +59,20 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen relative">
-      <AnimatedBackground />
+      <ScrollingBackground />
       <Navbar />
       
-      <main className="container mx-auto px-4 py-20 relative">
+      <main className="container mx-auto px-4 py-20 relative z-10">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Link to="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+        </div>
+
         {/* Hero Section */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
             Get in <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Touch</span>
           </h1>
@@ -74,8 +82,8 @@ const Contact = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <Card className="bg-white/80 backdrop-blur-sm shadow-2xl">
+          {/* Contact Form - keep existing content but add animations */}
+          <Card className="bg-white/80 backdrop-blur-sm shadow-2xl animate-scale-in">
             <CardHeader>
               <CardTitle className="text-3xl text-gray-800 flex items-center gap-3">
                 <Send className="h-8 w-8 text-blue-600" />
@@ -162,7 +170,7 @@ const Contact = () => {
             </CardContent>
           </Card>
 
-          {/* Contact Information */}
+          {/* Contact Information - keep existing content but add animations */}
           <div className="space-y-8">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">Other Ways to Reach Us</h2>
@@ -216,7 +224,49 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* FAQ Section */}
+        {/* Navigation Section */}
+        <section className="mt-20 mb-12">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Explore Our Platform</h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            <Link to="/assessment" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <MessageCircle className="h-8 w-8 mx-auto mb-2 text-blue-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-gray-800">Assessment</h4>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/chat" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <MessageCircle className="h-8 w-8 mx-auto mb-2 text-green-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-gray-800">AI Chat</h4>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/resources" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <MessageCircle className="h-8 w-8 mx-auto mb-2 text-purple-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-gray-800">Resources</h4>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/about" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <MessageCircle className="h-8 w-8 mx-auto mb-2 text-orange-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-gray-800">About Us</h4>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </section>
+
+        {/* FAQ Section - keep existing content */}
         <section className="mt-20">
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
             Frequently Asked <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Questions</span>

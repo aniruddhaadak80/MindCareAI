@@ -1,10 +1,10 @@
-
-import { BookOpen, ExternalLink, Phone, MessageCircle, Heart, Users } from "lucide-react";
+import { BookOpen, ExternalLink, Phone, MessageCircle, Heart, Users, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
+import ScrollingBackground from "@/components/ScrollingBackground";
 
 const Resources = () => {
   const crisisResources = [
@@ -78,12 +78,20 @@ const Resources = () => {
 
   return (
     <div className="min-h-screen relative">
-      <AnimatedBackground />
+      <ScrollingBackground />
       <Navbar />
       
-      <main className="container mx-auto px-4 py-20 relative">
+      <main className="container mx-auto px-4 py-20 relative z-10">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Link to="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+        </div>
+
         {/* Hero Section */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
             Mental Health <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Resources</span>
           </h1>
@@ -92,8 +100,8 @@ const Resources = () => {
           </p>
         </div>
 
-        {/* Crisis Resources */}
-        <section className="mb-20">
+        {/* Crisis Resources - keep existing content but add animations */}
+        <section className="mb-20 animate-scale-in">
           <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-8 mb-12">
             <div className="text-center mb-8">
               <Phone className="h-12 w-12 text-red-600 mx-auto mb-4" />
@@ -120,7 +128,7 @@ const Resources = () => {
           </div>
         </section>
 
-        {/* Mental Health Organizations */}
+        {/* Mental Health Organizations - keep existing content but add animations */}
         <section className="mb-20">
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
             Professional <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Organizations</span>
@@ -159,7 +167,7 @@ const Resources = () => {
           </div>
         </section>
 
-        {/* Self-Care Tools */}
+        {/* Self-Care Tools - keep existing content but add animations */}
         <section className="mb-20">
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
             Self-Care <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">Tools</span>
@@ -192,8 +200,44 @@ const Resources = () => {
           </div>
         </section>
 
-        {/* Call to Action */}
-        <section className="text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-12 text-white">
+        {/* Navigation Section */}
+        <section className="mb-20">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Continue Your Journey</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link to="/assessment" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-6 text-center">
+                  <MessageCircle className="h-12 w-12 mx-auto mb-4 text-blue-600 group-hover:animate-pulse" />
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Take Assessment</h3>
+                  <p className="text-gray-600">Evaluate your mental wellness</p>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/chat" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-6 text-center">
+                  <Heart className="h-12 w-12 mx-auto mb-4 text-pink-600 group-hover:animate-pulse" />
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">AI Chat Support</h3>
+                  <p className="text-gray-600">Get personalized guidance</p>
+                </CardContent>
+              </Card>
+            </Link>
+            
+            <Link to="/contact" className="group">
+              <Card className="bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-6 text-center">
+                  <Users className="h-12 w-12 mx-auto mb-4 text-green-600 group-hover:animate-pulse" />
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Contact Us</h3>
+                  <p className="text-gray-600">Reach out for support</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </section>
+
+        {/* Call to Action - keep existing content */}
+        <section className="text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-12 text-white animate-scale-in">
           <h2 className="text-4xl font-bold mb-6">Need Professional Help?</h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
             While these resources are helpful, nothing replaces professional mental health care. 
