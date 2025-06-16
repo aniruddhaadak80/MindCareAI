@@ -1,10 +1,11 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Brain, Heart, Shield, Users, Sparkles, Zap, Star, MessageSquare } from "lucide-react";
+import { Link } from "react-router-dom";
 import AssessmentForm from "@/components/AssessmentForm";
 import ResultsDisplay from "@/components/ResultsDisplay";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimatedBackground from "@/components/AnimatedBackground";
 
@@ -49,34 +50,7 @@ const Index = () => {
   return (
     <div className="min-h-screen relative">
       <AnimatedBackground />
-      
-      {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md border-b border-blue-100 sticky top-0 z-50 shadow-lg">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg animate-pulse">
-                <Brain className="h-6 w-6 text-white" />
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                MindCare AI
-              </h1>
-            </div>
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#features" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:underline">Features</a>
-              <a href="#about" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:underline">About</a>
-              <a href="#resources" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:underline">Resources</a>
-              <Button 
-                onClick={handleStartAssessment}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                <MessageSquare className="h-4 w-4 mr-2" />
-                Start Assessment
-              </Button>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 relative">
@@ -118,14 +92,26 @@ const Index = () => {
               Start Your Journey
             </Button>
             
-            <Button 
-              variant="outline"
-              size="lg"
-              className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 px-12 py-4 text-xl rounded-2xl transition-all duration-300 transform hover:scale-105"
-            >
-              <Star className="h-6 w-6 mr-3" />
-              Learn More
-            </Button>
+            <Link to="/chat">
+              <Button 
+                size="lg"
+                className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              >
+                <MessageSquare className="h-6 w-6 mr-3" />
+                AI Chat Support
+              </Button>
+            </Link>
+            
+            <Link to="/about">
+              <Button 
+                variant="outline"
+                size="lg"
+                className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50 px-12 py-4 text-xl rounded-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                <Star className="h-6 w-6 mr-3" />
+                Learn More
+              </Button>
+            </Link>
           </div>
 
           {/* Stats */}
