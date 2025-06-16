@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   id: number;
@@ -52,27 +53,23 @@ const Chat = () => {
 
     try {
       // Call Gemini API through Supabase Edge Function
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: inputMessage }),
+      const { data, error } = await supabase.functions.invoke('chat', {
+        body: { message: inputMessage }
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        const aiMessage: Message = {
-          id: messages.length + 2,
-          content: data.response,
-          isUser: false,
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, aiMessage]);
-      } else {
-        throw new Error('Failed to get response');
+      if (error) {
+        throw error;
       }
+
+      const aiMessage: Message = {
+        id: messages.length + 2,
+        content: data.response,
+        isUser: false,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
+      console.error('Error calling chat function:', error);
       // Fallback response for demo purposes
       const aiMessage: Message = {
         id: messages.length + 2,
