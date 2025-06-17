@@ -18,7 +18,7 @@ serve(async (req) => {
   try {
     const { message } = await req.json();
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,16 +26,29 @@ serve(async (req) => {
       body: JSON.stringify({
         contents: [{
           parts: [{
-            text: `You are a compassionate AI mental health companion. Your role is to provide emotional support, active listening, and gentle guidance. Always be empathetic, non-judgmental, and remind users to seek professional help for serious issues. Never attempt to diagnose or provide medical advice. Keep responses supportive but concise.
+            text: `You are a compassionate AI mental health companion specializing in emotional support and guidance. Your role is to:
+
+1. Provide empathetic, non-judgmental listening
+2. Offer gentle guidance and coping strategies
+3. Validate feelings and experiences
+4. Suggest healthy coping mechanisms
+5. Encourage professional help when appropriate
+6. Never attempt to diagnose or provide medical advice
+7. Always prioritize user safety and well-being
+
+Remember: If someone expresses thoughts of self-harm or suicide, immediately encourage them to contact emergency services (988 in the US) or a mental health crisis line.
+
+Keep responses supportive, warm, and conversational. Focus on understanding and helping the person process their emotions.
 
 User message: ${message}`
           }]
         }],
         generationConfig: {
-          temperature: 0.7,
+          temperature: 0.8,
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 1024,
+          candidateCount: 1,
         },
         safetySettings: [
           {
@@ -67,13 +80,14 @@ User message: ${message}`
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     } else {
+      console.error('Invalid response structure:', data);
       throw new Error('Invalid response from Gemini API');
     }
   } catch (error) {
     console.error('Error in chat function:', error);
     
     // Fallback response
-    const fallbackResponse = "I understand you're reaching out. While I'm here to provide support, please remember that if you're experiencing a mental health crisis, it's important to contact a professional immediately. How can I support you today?";
+    const fallbackResponse = "I understand you're reaching out for support. While I'm here to listen and help, please remember that if you're experiencing a mental health crisis, it's important to contact a professional immediately. You can reach the 988 Suicide & Crisis Lifeline anytime. How can I support you today?";
     
     return new Response(JSON.stringify({ response: fallbackResponse }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
