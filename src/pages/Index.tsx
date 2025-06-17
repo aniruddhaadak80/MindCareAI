@@ -94,6 +94,16 @@ const Index = () => {
               </Button>
             </Link>
             
+            <Link to="/mood-tests">
+              <Button 
+                size="lg"
+                className="bg-gradient-to-r from-pink-600 to-orange-600 hover:from-pink-700 hover:to-orange-700 text-white px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              >
+                <Brain className="h-6 w-6 mr-3" />
+                AI Mood Tests
+              </Button>
+            </Link>
+            
             <Link to="/chat">
               <Button 
                 size="lg"
@@ -119,9 +129,9 @@ const Index = () => {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {[
-              { number: "10K+", label: "Assessments Completed", icon: Brain },
-              { number: "98%", label: "User Satisfaction", icon: Heart },
-              { number: "24/7", label: "Support Available", icon: Shield },
+              { number: "15K+", label: "AI Assessments Completed", icon: Brain },
+              { number: "99%", label: "User Satisfaction", icon: Heart },
+              { number: "24/7", label: "AI Support Available", icon: Shield },
               { number: "100%", label: "Privacy Protected", icon: Users }
             ].map((stat, index) => {
               const IconComponent = stat.icon;
@@ -152,8 +162,8 @@ const Index = () => {
           {[
             {
               icon: Brain,
-              title: "Advanced AI Analysis",
-              description: "State-of-the-art machine learning algorithms analyze your responses to provide deeply personalized mental health insights and recommendations.",
+              title: "AI Mood Analysis",
+              description: "Advanced AI generates personalized quizzes based on your current emotional state, providing real-time insights and percentage-based assessments.",
               color: "blue",
               gradient: "from-blue-500 to-cyan-500"
             },
@@ -216,19 +226,31 @@ const Index = () => {
             Ready to Begin Your Wellness Journey?
           </h3>
           <p className="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed animate-fade-in">
-            Take our comprehensive assessment and receive personalized recommendations for your mental health. 
+            Take our comprehensive assessment or try our AI mood tests to receive personalized recommendations for your mental health. 
             Your journey to better wellness starts with a single click.
           </p>
-          <Link to="/assessment">
-            <Button 
-              size="lg"
-              variant="secondary"
-              className="bg-white text-purple-700 hover:bg-blue-50 px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 animate-scale-in"
-            >
-              <MessageSquare className="h-6 w-6 mr-3 animate-bounce" />
-              Start Your Assessment Now
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/assessment">
+              <Button 
+                size="lg"
+                variant="secondary"
+                className="bg-white text-purple-700 hover:bg-blue-50 px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 animate-scale-in"
+              >
+                <MessageSquare className="h-6 w-6 mr-3 animate-bounce" />
+                Start Assessment Now
+              </Button>
+            </Link>
+            <Link to="/mood-tests">
+              <Button 
+                size="lg"
+                variant="secondary"
+                className="bg-gradient-to-r from-pink-500 to-orange-500 text-white hover:from-pink-600 hover:to-orange-600 px-12 py-4 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 animate-scale-in"
+              >
+                <Brain className="h-6 w-6 mr-3 animate-bounce" />
+                Try AI Mood Tests
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
