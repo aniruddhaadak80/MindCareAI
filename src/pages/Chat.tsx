@@ -1,13 +1,16 @@
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, MessageCircle, ArrowLeft, Sparkles, Heart } from "lucide-react";
+import { Send, Bot, User, MessageCircle, ArrowLeft, Sparkles, Heart, Mic, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollingBackground from "@/components/ScrollingBackground";
+import VoiceChat from "@/components/VoiceChat";
+import MotivationalQuotes from "@/components/MotivationalQuotes";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
@@ -28,6 +31,7 @@ const Chat = () => {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [currentMood, setCurrentMood] = useState("calm");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -69,6 +73,17 @@ const Chat = () => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, aiMessage]);
+
+      // Extract mood from conversation for quotes
+      if (inputMessage.toLowerCase().includes('anxious') || inputMessage.toLowerCase().includes('worried')) {
+        setCurrentMood('anxious');
+      } else if (inputMessage.toLowerCase().includes('sad') || inputMessage.toLowerCase().includes('depressed')) {
+        setCurrentMood('sad');
+      } else if (inputMessage.toLowerCase().includes('stressed') || inputMessage.toLowerCase().includes('overwhelmed')) {
+        setCurrentMood('stressed');
+      } else if (inputMessage.toLowerCase().includes('tired') || inputMessage.toLowerCase().includes('exhausted')) {
+        setCurrentMood('tired');
+      }
     } catch (error) {
       console.error('Error calling chat function:', error);
       // Fallback response for demo purposes
@@ -97,7 +112,7 @@ const Chat = () => {
       <Navbar />
       
       <main className="flex-1 container mx-auto px-4 py-8 relative z-10">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">
             <Link to="/" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors group">
@@ -118,97 +133,127 @@ const Chat = () => {
               <Heart className="h-8 w-8 text-red-400 animate-pulse" />
             </div>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              A safe space powered by Gemini 2.0 to share your thoughts and feelings. Remember, this is not a substitute for professional therapy.
+              A safe space powered by Gemini 2.0 to share your thoughts and feelings. Choose how you'd like to interact with your AI companion.
             </p>
           </div>
 
-          {/* Chat Container */}
-          <Card className="bg-white/95 backdrop-blur-md shadow-2xl border-0 animate-scale-in overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-              <CardTitle className="flex items-center gap-3">
-                <MessageCircle className="h-6 w-6" />
-                Confidential AI Chat Session
-                <div className="ml-auto flex items-center gap-2 text-sm bg-white/20 rounded-full px-3 py-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  Gemini 2.0 Active
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              {/* Messages */}
-              <div className="h-96 md:h-[500px] overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-indigo-50/30 to-purple-50/30">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex gap-3 ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div className={`flex gap-3 max-w-[80%] ${message.isUser ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <div className={`p-2 rounded-full shadow-lg ${
-                        message.isUser 
-                          ? 'bg-gradient-to-r from-indigo-500 to-purple-500' 
-                          : 'bg-gradient-to-r from-purple-500 to-pink-500'
-                      }`}>
-                        {message.isUser ? (
-                          <User className="h-5 w-5 text-white" />
-                        ) : (
-                          <Bot className="h-5 w-5 text-white" />
-                        )}
-                      </div>
-                      <div
-                        className={`p-4 rounded-2xl shadow-lg ${
-                          message.isUser
-                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
-                            : 'bg-gradient-to-r from-gray-50 to-white text-gray-800 border border-purple-100'
-                        }`}
-                      >
-                        <p className="text-sm md:text-base leading-relaxed">{message.content}</p>
-                        <p className={`text-xs mt-2 ${message.isUser ? 'text-indigo-100' : 'text-gray-500'}`}>
-                          {message.timestamp.toLocaleTimeString()}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                
-                {isLoading && (
-                  <div className="flex gap-3 justify-start">
-                    <div className="p-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg">
-                      <Bot className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="bg-gradient-to-r from-gray-50 to-white p-4 rounded-2xl border border-purple-100 shadow-lg">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-pink-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
+          {/* Main Content with Tabs */}
+          <Tabs defaultValue="text-chat" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/90 backdrop-blur-md shadow-lg">
+              <TabsTrigger value="text-chat" className="flex items-center gap-2">
+                <MessageCircle className="w-4 h-4" />
+                Text Chat
+              </TabsTrigger>
+              <TabsTrigger value="voice-chat" className="flex items-center gap-2">
+                <Mic className="w-4 h-4" />
+                Voice Chat
+              </TabsTrigger>
+              <TabsTrigger value="motivation" className="flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                Motivation
+              </TabsTrigger>
+            </TabsList>
 
-              {/* Input Area */}
-              <div className="border-t bg-gradient-to-r from-indigo-50 to-purple-50 p-4">
-                <div className="flex gap-3">
-                  <Input
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Share what's on your mind..."
-                    className="flex-1 bg-white/80 border-purple-200 focus:border-indigo-400 focus:ring-indigo-400"
-                    disabled={isLoading}
-                  />
-                  <Button
-                    onClick={sendMessage}
-                    disabled={!inputMessage.trim() || isLoading}
-                    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 shadow-lg"
-                  >
-                    <Send className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            {/* Text Chat Tab */}
+            <TabsContent value="text-chat">
+              <Card className="bg-white/95 backdrop-blur-md shadow-2xl border-0 animate-scale-in overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+                  <CardTitle className="flex items-center gap-3">
+                    <MessageCircle className="h-6 w-6" />
+                    Confidential AI Chat Session
+                    <div className="ml-auto flex items-center gap-2 text-sm bg-white/20 rounded-full px-3 py-1">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      Gemini 2.0 Active
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  {/* Messages */}
+                  <div className="h-96 md:h-[500px] overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-indigo-50/30 to-purple-50/30">
+                    {messages.map((message) => (
+                      <div
+                        key={message.id}
+                        className={`flex gap-3 ${message.isUser ? 'justify-end' : 'justify-start'}`}
+                      >
+                        <div className={`flex gap-3 max-w-[80%] ${message.isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+                          <div className={`p-2 rounded-full shadow-lg ${
+                            message.isUser 
+                              ? 'bg-gradient-to-r from-indigo-500 to-purple-500' 
+                              : 'bg-gradient-to-r from-purple-500 to-pink-500'
+                          }`}>
+                            {message.isUser ? (
+                              <User className="h-5 w-5 text-white" />
+                            ) : (
+                              <Bot className="h-5 w-5 text-white" />
+                            )}
+                          </div>
+                          <div
+                            className={`p-4 rounded-2xl shadow-lg ${
+                              message.isUser
+                                ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
+                                : 'bg-gradient-to-r from-gray-50 to-white text-gray-800 border border-purple-100'
+                            }`}
+                          >
+                            <p className="text-sm md:text-base leading-relaxed">{message.content}</p>
+                            <p className={`text-xs mt-2 ${message.isUser ? 'text-indigo-100' : 'text-gray-500'}`}>
+                              {message.timestamp.toLocaleTimeString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    
+                    {isLoading && (
+                      <div className="flex gap-3 justify-start">
+                        <div className="p-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg">
+                          <Bot className="h-5 w-5 text-white" />
+                        </div>
+                        <div className="bg-gradient-to-r from-gray-50 to-white p-4 rounded-2xl border border-purple-100 shadow-lg">
+                          <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+                            <div className="w-2 h-2 bg-pink-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <div ref={messagesEndRef} />
+                  </div>
+
+                  {/* Input Area */}
+                  <div className="border-t bg-gradient-to-r from-indigo-50 to-purple-50 p-4">
+                    <div className="flex gap-3">
+                      <Input
+                        value={inputMessage}
+                        onChange={(e) => setInputMessage(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder="Share what's on your mind..."
+                        className="flex-1 bg-white/80 border-purple-200 focus:border-indigo-400 focus:ring-indigo-400"
+                        disabled={isLoading}
+                      />
+                      <Button
+                        onClick={sendMessage}
+                        disabled={!inputMessage.trim() || isLoading}
+                        className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 shadow-lg"
+                      >
+                        <Send className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Voice Chat Tab */}
+            <TabsContent value="voice-chat">
+              <VoiceChat />
+            </TabsContent>
+
+            {/* Motivation Tab */}
+            <TabsContent value="motivation">
+              <MotivationalQuotes mood={currentMood} />
+            </TabsContent>
+          </Tabs>
 
           {/* Navigation Cards */}
           <div className="mt-8 grid md:grid-cols-3 gap-4">
@@ -222,22 +267,22 @@ const Chat = () => {
               </Card>
             </Link>
             
+            <Link to="/mood-tests" className="group">
+              <Card className="bg-gradient-to-br from-pink-50/80 to-rose-50/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-pink-200">
+                <CardContent className="p-4 text-center">
+                  <Sparkles className="h-8 w-8 mx-auto mb-2 text-pink-600 group-hover:animate-pulse" />
+                  <h4 className="font-bold text-pink-800 mb-1">Mood Tests</h4>
+                  <p className="text-sm text-pink-600">AI-powered assessments</p>
+                </CardContent>
+              </Card>
+            </Link>
+            
             <Link to="/resources" className="group">
               <Card className="bg-gradient-to-br from-green-50/80 to-emerald-50/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-green-200">
                 <CardContent className="p-4 text-center">
                   <Heart className="h-8 w-8 mx-auto mb-2 text-green-600 group-hover:animate-pulse" />
                   <h4 className="font-bold text-green-800 mb-1">Resources</h4>
                   <p className="text-sm text-green-600">Professional help & tools</p>
-                </CardContent>
-              </Card>
-            </Link>
-            
-            <Link to="/contact" className="group">
-              <Card className="bg-gradient-to-br from-pink-50/80 to-rose-50/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-pink-200">
-                <CardContent className="p-4 text-center">
-                  <Sparkles className="h-8 w-8 mx-auto mb-2 text-pink-600 group-hover:animate-pulse" />
-                  <h4 className="font-bold text-pink-800 mb-1">Contact</h4>
-                  <p className="text-sm text-pink-600">Get in touch with us</p>
                 </CardContent>
               </Card>
             </Link>
