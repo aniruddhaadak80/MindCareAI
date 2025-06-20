@@ -131,10 +131,49 @@ const Index = () => {
               </Button>
             </Link>
             
-            <Link to="/dream-analysis" className="group">
+            <Link to="/emotion-analysis" className="group">
               <Button 
                 size="lg"
                 className="w-full h-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-indigo-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <Heart className="h-8 w-8 animate-pulse group-hover:animate-bounce" />
+                  <span>Emotion Analysis</span>
+                </div>
+              </Button>
+            </Link>
+          </div>
+
+          {/* New AI Therapy Features - Enhanced Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16 animate-fade-in">
+            <Link to="/crisis-support" className="group">
+              <Button 
+                size="lg"
+                className="w-full h-20 bg-gradient-to-br from-red-600 via-orange-600 to-yellow-600 hover:from-red-700 hover:via-orange-700 hover:to-yellow-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-red-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <Shield className="h-8 w-8 animate-pulse group-hover:animate-bounce" />
+                  <span>Crisis Support</span>
+                </div>
+              </Button>
+            </Link>
+            
+            <Link to="/cognitive-restructuring" className="group">
+              <Button 
+                size="lg"
+                className="w-full h-20 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-blue-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <Brain className="h-8 w-8 animate-pulse group-hover:animate-bounce" />
+                  <span>Thought Restructuring</span>
+                </div>
+              </Button>
+            </Link>
+            
+            <Link to="/dream-analysis" className="group">
+              <Button 
+                size="lg"
+                className="w-full h-20 bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 hover:from-purple-700 hover:via-violet-700 hover:to-indigo-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-purple-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
               >
                 <div className="flex flex-col items-center gap-2">
                   <span className="text-2xl">🌙</span>
@@ -142,10 +181,7 @@ const Index = () => {
                 </div>
               </Button>
             </Link>
-          </div>
-
-          {/* New AI Therapy Features */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 animate-fade-in">
+            
             <Link to="/poetry-therapy" className="group">
               <Button 
                 size="lg"
@@ -166,18 +202,6 @@ const Index = () => {
                 <div className="flex flex-col items-center gap-2">
                   <span className="text-2xl">🧘</span>
                   <span>Meditation Guide</span>
-                </div>
-              </Button>
-            </Link>
-            
-            <Link to="/resources" className="group">
-              <Button 
-                size="lg"
-                className="w-full h-20 bg-gradient-to-br from-amber-600 via-orange-600 to-red-600 hover:from-amber-700 hover:via-orange-700 hover:to-red-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-orange-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
-              >
-                <div className="flex flex-col items-center gap-2">
-                  <Rocket className="h-8 w-8 animate-bounce group-hover:animate-spin" />
-                  <span>Resources Hub</span>
                 </div>
               </Button>
             </Link>

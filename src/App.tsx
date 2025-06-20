@@ -13,6 +13,9 @@ import MoodTests from "./pages/MoodTests";
 import DreamAnalysis from "./pages/DreamAnalysis";
 import PoetryTherapy from "./pages/PoetryTherapy";
 import MeditationGuide from "./pages/MeditationGuide";
+import EmotionAnalysis from "./pages/EmotionAnalysis";
+import CrisisSupport from "./pages/CrisisSupport";
+import CognitiveRestructuring from "./pages/CognitiveRestructuring";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +36,9 @@ const App = () => (
           <Route path="/dream-analysis" element={<DreamAnalysis />} />
           <Route path="/poetry-therapy" element={<PoetryTherapy />} />
           <Route path="/meditation-guide" element={<MeditationGuide />} />
+          <Route path="/emotion-analysis" element={<EmotionAnalysis />} />
+          <Route path="/crisis-support" element={<CrisisSupport />} />
+          <Route path="/cognitive-restructuring" element={<CognitiveRestructuring />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
