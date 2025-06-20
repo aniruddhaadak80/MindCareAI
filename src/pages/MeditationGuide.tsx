@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Play, Pause, RotateCcw, Lotus, ArrowLeft, Crown, Sparkles } from "lucide-react";
+import { Play, Pause, RotateCcw, Flower2, ArrowLeft, Crown, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -124,7 +124,7 @@ When you're ready, gently open your eyes and return to your day feeling refreshe
               <span className="text-lg font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent font-playfair">
                 AI Meditation Master
               </span>
-              <Lotus className="h-8 w-8 text-teal-400 animate-pulse" />
+              <Flower2 className="h-8 w-8 text-teal-400 animate-pulse" />
             </div>
             
             <h1 className="text-5xl md:text-8xl font-black text-transparent bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text mb-8 leading-none font-playfair tracking-tight">
@@ -139,7 +139,7 @@ When you're ready, gently open your eyes and return to your day feeling refreshe
           <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-2xl mb-8 border-0 animate-scale-in">
             <CardHeader className="bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 text-white">
               <CardTitle className="text-3xl font-black text-center font-playfair flex items-center justify-center gap-3">
-                <Lotus className="h-8 w-8" />
+                <Flower2 className="h-8 w-8" />
                 Choose Your Meditation
                 <Sparkles className="h-8 w-8" />
               </CardTitle>
@@ -169,7 +169,7 @@ When you're ready, gently open your eyes and return to your day feeling refreshe
           {isGenerating && (
             <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-2xl mb-8 border-0 animate-scale-in">
               <CardContent className="p-12 text-center">
-                <Lotus className="h-16 w-16 mx-auto mb-6 text-teal-600 animate-spin" />
+                <Flower2 className="h-16 w-16 mx-auto mb-6 text-teal-600 animate-spin" />
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 font-playfair">
                   Creating Your Personalized Meditation...
                 </h3>
@@ -187,7 +187,7 @@ When you're ready, gently open your eyes and return to your day feeling refreshe
               <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-2xl border-0 animate-scale-in">
                 <CardHeader className="bg-gradient-to-r from-cyan-600 via-teal-600 to-green-600 text-white">
                   <CardTitle className="text-3xl font-black text-center font-playfair flex items-center justify-center gap-3">
-                    <Lotus className="h-8 w-8" />
+                    <Flower2 className="h-8 w-8" />
                     {selectedType} Meditation
                     <Badge className="bg-white/20 text-white text-lg px-4 py-2">
                       {isPlaying ? 'Playing' : 'Ready'}
