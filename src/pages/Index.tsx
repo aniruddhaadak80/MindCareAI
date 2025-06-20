@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,7 +74,7 @@ const Index = () => {
             </span>
           </h1>
           
-          <p className="text-2xl md:text-4xl text-gray-700 mb-12 leading-relaxed max-w-5xl mx-auto animate-fade-in font-light">
+          <p className="text-2xl md:text-4xl text-gray-700 dark:text-gray-300 mb-12 leading-relaxed max-w-5xl mx-auto animate-fade-in font-light">
             Experience the future of mental health with our revolutionary AI-powered platform. 
             <span className="block mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-semibold">
               Personalized • Intelligent • Compassionate
@@ -83,19 +82,19 @@ const Index = () => {
           </p>
           
           {/* Enhanced Privacy Badge */}
-          <div className="bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 border-2 border-emerald-200 rounded-3xl p-8 mb-16 max-w-4xl mx-auto shadow-2xl animate-scale-in backdrop-blur-sm">
+          <div className="bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-900/20 dark:via-teal-900/20 dark:to-cyan-900/20 border-2 border-emerald-200 dark:border-emerald-700 rounded-3xl p-8 mb-16 max-w-4xl mx-auto shadow-2xl animate-scale-in backdrop-blur-sm">
             <div className="flex items-center justify-center mb-4">
               <Shield className="h-8 w-8 text-emerald-600 mr-3 animate-pulse" />
-              <strong className="text-2xl text-emerald-800 font-playfair">Your Privacy is Sacred</strong>
+              <strong className="text-2xl text-emerald-800 dark:text-emerald-200 font-playfair">Your Privacy is Sacred</strong>
               <Award className="h-8 w-8 text-emerald-600 ml-3 animate-pulse" />
             </div>
-            <p className="text-emerald-700 text-lg leading-relaxed">
+            <p className="text-emerald-700 dark:text-emerald-300 text-lg leading-relaxed">
               Military-grade encryption • Zero data storage • HIPAA compliant • 100% anonymous
             </p>
           </div>
 
-          {/* Enhanced Action Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 animate-fade-in">
+          {/* Enhanced Action Buttons - Main Features */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 animate-fade-in">
             <Link to="/assessment" className="group">
               <Button 
                 size="lg"
@@ -132,14 +131,53 @@ const Index = () => {
               </Button>
             </Link>
             
-            <Link to="/about" className="group">
+            <Link to="/dream-analysis" className="group">
+              <Button 
+                size="lg"
+                className="w-full h-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-indigo-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <span className="text-2xl">🌙</span>
+                  <span>Dream Analysis</span>
+                </div>
+              </Button>
+            </Link>
+          </div>
+
+          {/* New AI Therapy Features */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 animate-fade-in">
+            <Link to="/poetry-therapy" className="group">
+              <Button 
+                size="lg"
+                className="w-full h-20 bg-gradient-to-br from-pink-600 via-rose-600 to-red-600 hover:from-pink-700 hover:via-rose-700 hover:to-red-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-pink-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <span className="text-2xl">✍️</span>
+                  <span>Poetry Therapy</span>
+                </div>
+              </Button>
+            </Link>
+            
+            <Link to="/meditation-guide" className="group">
+              <Button 
+                size="lg"
+                className="w-full h-20 bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-700 hover:via-cyan-700 hover:to-blue-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-teal-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <span className="text-2xl">🧘</span>
+                  <span>Meditation Guide</span>
+                </div>
+              </Button>
+            </Link>
+            
+            <Link to="/resources" className="group">
               <Button 
                 size="lg"
                 className="w-full h-20 bg-gradient-to-br from-amber-600 via-orange-600 to-red-600 hover:from-amber-700 hover:via-orange-700 hover:to-red-700 text-white text-xl font-bold rounded-3xl shadow-2xl hover:shadow-orange-500/50 transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 border-2 border-white/20"
               >
                 <div className="flex flex-col items-center gap-2">
                   <Rocket className="h-8 w-8 animate-bounce group-hover:animate-spin" />
-                  <span>Discover More</span>
+                  <span>Resources Hub</span>
                 </div>
               </Button>
             </Link>

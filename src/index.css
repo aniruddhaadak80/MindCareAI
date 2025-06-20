@@ -97,6 +97,24 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
   }
+
+  /* Ensure text is always visible in both modes */
+  .text-gray-700 {
+    @apply dark:text-gray-300;
+  }
+  
+  .text-gray-600 {
+    @apply dark:text-gray-400;
+  }
+  
+  .text-gray-800 {
+    @apply dark:text-gray-200;
+  }
+
+  /* Enhanced visibility for gradient text */
+  .bg-gradient-to-r {
+    background-attachment: fixed;
+  }
 }
 
 /* Custom Animation Classes */
@@ -123,6 +141,19 @@
   
   .animate-spin-slow {
     animation: spin 8s linear infinite;
+  }
+
+  /* New animations for enhanced interactivity */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
   }
 }
 
@@ -159,11 +190,43 @@
   }
 }
 
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 /* Glass morphism effect */
 .glass {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Gradient text animations */
@@ -172,6 +235,7 @@
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: gradient 3s ease infinite;
 }
 
@@ -185,4 +249,19 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Enhanced button hover effects */
+.btn-glow:hover {
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Improved readability for all text elements */
+p, span, div, h1, h2, h3, h4, h5, h6 {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dark p, .dark span, .dark div, .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
 }
