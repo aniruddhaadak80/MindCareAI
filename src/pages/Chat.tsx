@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Mic, Volume2, MessageCircle, Heart } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,6 +14,7 @@ import ChatInput from "@/components/ChatInput";
 import ChatNavigation from "@/components/ChatNavigation";
 import ChatDisclaimer from "@/components/ChatDisclaimer";
 import { supabase } from "@/integrations/supabase/client";
+import { createMessageIdGenerator } from "@/lib/chatMessages";
 
 interface Message {
   id: number;
@@ -34,9 +35,19 @@ const Chat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentMood, setCurrentMood] = useState("calm");
 
+  // The greeting above already uses id 1, so the first generated id is 2.
+  // The ids are handed out by a dedicated generator instead of being derived
+  // from the length of the message list, so a message that is appended while
+  // a reply is still pending can never receive an id that is already taken.
+  const messageIdGeneratorRef = useRef<(() => number) | null>(null);
+  if (messageIdGeneratorRef.current === null) {
+    messageIdGeneratorRef.current = createMessageIdGenerator(2);
+  }
+  const nextMessageId = () => messageIdGeneratorRef.current!();
+
   const sendMessage = async (inputMessage: string) => {
     const userMessage: Message = {
-      id: messages.length + 1,
+      id: nextMessageId(),
       content: inputMessage,
       isUser: true,
       timestamp: new Date()
@@ -56,7 +67,7 @@ const Chat = () => {
       }
 
       const aiMessage: Message = {
-        id: messages.length + 2,
+        id: nextMessageId(),
         content: data.response,
         isUser: false,
         timestamp: new Date()
@@ -77,7 +88,7 @@ const Chat = () => {
       console.error('Error calling chat function:', error);
       // Fallback response for demo purposes
       const aiMessage: Message = {
-        id: messages.length + 2,
+        id: nextMessageId(),
         content: "I understand you're reaching out, and I appreciate you sharing with me. While I'm here to provide support, please remember that if you're experiencing a mental health crisis, it's important to contact a professional immediately. Would you like to tell me more about what's on your mind? 💜",
         isUser: false,
         timestamp: new Date()
