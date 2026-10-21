@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# TypeScript build info (tsc -b)
+*.tsbuildinfo
+
+# Test coverage reports
+coverage
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
