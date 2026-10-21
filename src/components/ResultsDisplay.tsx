@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { AssessmentResult } from "@/pages/Index";
 import { AlertTriangle, CheckCircle, Phone, ExternalLink, RefreshCw } from "lucide-react";
+import type { CSSProperties } from "react";
 
 interface ResultsDisplayProps {
   result: AssessmentResult;
@@ -123,9 +124,8 @@ const ResultsDisplay = ({ result, onRestart }: ResultsDisplayProps) => {
                   value={score} 
                   className="h-3"
                   style={{
-                    // @ts-ignore
                     '--progress-background': getCategoryColor(category, score)
-                  }}
+                  } as CSSProperties}
                 />
               </div>
             ))}

@@ -1,12 +1,12 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, type LucideIcon } from "lucide-react";
 
 interface MoodOption {
   value: string;
   label: string;
-  icon: any;
+  icon: LucideIcon;
   description: string;
   color: string;
 }

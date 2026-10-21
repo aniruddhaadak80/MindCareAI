@@ -1,0 +1,57 @@
+name: Issue triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  label:
+    name: Apply Hacktoberfest label
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Label Hacktoberfest issues
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const label = 'hacktoberfest';
+
+            if (!issue) {
+              core.info('No issue in the event payload, nothing to do.');
+              return;
+            }
+
+            const alreadyLabeled = (issue.labels || []).some(
+              (existing) => existing.name === label,
+            );
+
+            if (alreadyLabeled) {
+              core.info(`Issue #${issue.number} already has the "${label}" label.`);
+              return;
+            }
+
+            // Only tag issues that actually opt in to Hacktoberfest.
+            const content = `${issue.title || ''}\n${issue.body || ''}`.toLowerCase();
+            if (!content.includes('hacktoberfest')) {
+              core.info(`Issue #${issue.number} does not mention Hacktoberfest, skipping.`);
+              return;
+            }
+
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: [label],
+              });
+              core.info(`Added the "${label}" label to issue #${issue.number}.`);
+            } catch (error) {
+              // Never fail the workflow because a label could not be applied.
+              core.warning(`Could not label issue #${issue.number}: ${error.message}`);
+            }

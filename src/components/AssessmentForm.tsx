@@ -133,7 +133,10 @@ const AssessmentForm = ({ onComplete }: AssessmentFormProps) => {
     onComplete(result);
   };
 
-  const generateRecommendations = (scores: any, riskLevel: string): string[] => {
+  const generateRecommendations = (
+    scores: AssessmentResult['categories'],
+    riskLevel: AssessmentResult['riskLevel']
+  ): string[] => {
     const recommendations = [];
 
     if (riskLevel === 'high') {

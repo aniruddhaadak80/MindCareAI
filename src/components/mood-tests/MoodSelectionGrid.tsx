@@ -1,11 +1,11 @@
 
-import { Cloud, Sun, Moon, Star, Brain, Zap, Heart } from "lucide-react";
+import { Cloud, Sun, Moon, Star, Brain, Zap, Heart, type LucideIcon } from "lucide-react";
 import MoodSelectionCard from "./MoodSelectionCard";
 
 interface MoodOption {
   value: string;
   label: string;
-  icon: any;
+  icon: LucideIcon;
   description: string;
   color: string;
 }

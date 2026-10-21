@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,7 +27,7 @@ const MotivationalQuotes = ({ mood = "general", situation = "" }: MotivationalQu
   
   const { toast } = useToast();
 
-  const generateQuotes = async () => {
+  const generateQuotes = useCallback(async () => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('chat', {
@@ -81,7 +81,7 @@ const MotivationalQuotes = ({ mood = "general", situation = "" }: MotivationalQu
       setCurrentQuote(fallbackQuotes[0]);
     }
     setIsLoading(false);
-  };
+  }, [mood, situation]);
 
   const getRandomQuote = () => {
     if (quotes.length > 0) {
@@ -154,7 +154,7 @@ const MotivationalQuotes = ({ mood = "general", situation = "" }: MotivationalQu
     if (savedFavorites) {
       setFavorites(JSON.parse(savedFavorites));
     }
-  }, [mood, situation]);
+  }, [generateQuotes]);
 
   if (isLoading) {
     return (

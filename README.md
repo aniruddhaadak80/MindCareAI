@@ -3,6 +3,8 @@
 
 ![MindCare AI Banner](https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&h=400&fit=crop)
 
+![CI](https://github.com/aniruddhaadak80/MindCareAI/actions/workflows/ci.yml/badge.svg)
+
 ## 🌟 Overview
 
 MindCare AI is a comprehensive, AI-powered mental health assessment platform designed to provide personalized insights into mental wellness. Built with cutting-edge technology and a focus on privacy, accessibility, and professional-grade recommendations.
@@ -146,12 +148,23 @@ npm run dev
 
 ### Available Scripts
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
-npm run type-check   # TypeScript type checking
+npm run dev            # Start development server
+npm run build          # Build for production
+npm run preview        # Preview production build
+npm run lint           # Run ESLint
+npm run type-check     # TypeScript type checking
+npm test               # Run the unit test suite once
+npm run test:watch     # Run the unit test suite in watch mode
+npm run test:coverage  # Run the unit test suite and report coverage
 ```
+
+### Continuous Integration
+
+Every push and pull request runs the GitHub Actions workflow in
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml), which installs the
+dependencies and runs the lint, type-check, unit test and production build
+steps on Node 20 and Node 22. The coverage report is uploaded as a build
+artifact of the workflow run.
 
 ## 🌐 Deployment
 
