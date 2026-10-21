@@ -1,5 +1,5 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mic, MicOff, Volume2, VolumeX, Phone, PhoneOff } from "lucide-react";
@@ -18,6 +18,18 @@ const VoiceChat = () => {
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const audioElement = useRef<HTMLAudioElement | null>(null);
+  // Mirrors `isListening` so timers and the unmount cleanup always read the
+  // current value instead of a stale render closure.
+  const isListeningRef = useRef(false);
+
+  const stopListening = useCallback(() => {
+    if (mediaRecorder.current && mediaRecorder.current.state !== 'inactive') {
+      mediaRecorder.current.stop();
+      mediaRecorder.current.stream.getTracks().forEach(track => track.stop());
+    }
+    isListeningRef.current = false;
+    setIsListening(false);
+  }, []);
 
   const startListening = async () => {
     try {
@@ -35,11 +47,12 @@ const VoiceChat = () => {
       };
 
       mediaRecorder.current.start();
+      isListeningRef.current = true;
       setIsListening(true);
       
       // Stop listening after 5 seconds
       setTimeout(() => {
-        if (mediaRecorder.current && isListening) {
+        if (mediaRecorder.current && isListeningRef.current) {
           stopListening();
         }
       }, 5000);
@@ -49,20 +62,15 @@ const VoiceChat = () => {
         description: "Listening... Speak now!",
       });
     } catch (error) {
+      console.error('Error accessing microphone:', error);
+      isListeningRef.current = false;
+      setIsListening(false);
       toast({
         title: "Error",
         description: "Could not access microphone",
         variant: "destructive",
       });
     }
-  };
-
-  const stopListening = () => {
-    if (mediaRecorder.current && mediaRecorder.current.state !== 'inactive') {
-      mediaRecorder.current.stop();
-      mediaRecorder.current.stream.getTracks().forEach(track => track.stop());
-    }
-    setIsListening(false);
   };
 
   const processAudio = async (audioBlob: Blob) => {
@@ -167,13 +175,15 @@ const VoiceChat = () => {
 
   useEffect(() => {
     return () => {
-      if (isListening) stopListening();
+      // Always release the microphone when the component unmounts, even if the
+      // recorder was never explicitly stopped.
+      if (isListeningRef.current) stopListening();
       if (audioElement.current) {
         audioElement.current.pause();
         audioElement.current = null;
       }
     };
-  }, []);
+  }, [stopListening]);
 
   return (
     <Card className="bg-white/95 backdrop-blur-md shadow-2xl border-0">

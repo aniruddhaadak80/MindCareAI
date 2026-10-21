@@ -19,7 +19,7 @@ serve(async (req) => {
       throw new Error('Gemini API key not configured');
     }
 
-    let prompt = `You are an expert emotion recognition AI. Analyze the following for emotional content and provide detailed insights:
+    const prompt = `You are an expert emotion recognition AI. Analyze the following for emotional content and provide detailed insights:
 
 ${text ? `Text: "${text}"` : ''}
 
