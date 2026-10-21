@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 import { FileText, RefreshCw, Sparkles, ArrowLeft } from "lucide-react";
 
 interface ResultsActionsProps {
-  onGenerateReport: () => void;
-  onResetQuiz: () => void;
+  /** Called when the full report is requested. Optional, so the component can
+   * be rendered while the result is still loading. */
+  onGenerateReport?: () => void;
+  /** Called when the quiz is started again. Optional, so the component can be
+   * rendered while the result is still loading. */
+  onResetQuiz?: () => void;
 }
 
 const ResultsActions = ({ onGenerateReport, onResetQuiz }: ResultsActionsProps) => {
@@ -13,7 +17,7 @@ const ResultsActions = ({ onGenerateReport, onResetQuiz }: ResultsActionsProps) 
     <div className="text-center space-y-4">
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Button 
-          onClick={onGenerateReport}
+          onClick={() => onGenerateReport?.()}
           size="lg"
           className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
         >
@@ -22,7 +26,7 @@ const ResultsActions = ({ onGenerateReport, onResetQuiz }: ResultsActionsProps) 
         </Button>
         
         <Button 
-          onClick={onResetQuiz}
+          onClick={() => onResetQuiz?.()}
           size="lg"
           className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
         >
