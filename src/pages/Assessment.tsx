@@ -7,34 +7,25 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollingBackground from "@/components/ScrollingBackground";
+import {
+  ASSESSMENT_OPTIONS,
+  ASSESSMENT_QUESTIONS,
+  getAssessmentOutcome,
+} from "@/lib/assessment";
 
 const Assessment = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
 
-  const questions = [
-    "Over the last 2 weeks, how often have you felt down, depressed, or hopeless?",
-    "How often have you felt nervous, anxious, or on edge?",
-    "How often have you had trouble falling or staying asleep?",
-    "How often have you felt tired or had little energy?",
-    "How often have you had trouble concentrating on things?",
-    "How often have you felt good about yourself?",
-    "How often have you been able to cope with stress?",
-    "How often have you felt overwhelmed by your responsibilities?"
-  ];
-
-  const options = [
-    { text: "Not at all", value: 0 },
-    { text: "Several days", value: 1 },
-    { text: "More than half the days", value: 2 },
-    { text: "Nearly every day", value: 3 }
-  ];
+  const questions = ASSESSMENT_QUESTIONS;
+  const options = ASSESSMENT_OPTIONS;
 
   const handleAnswer = (value: number) => {
-    const newAnswers = [...answers];
-    newAnswers[currentQuestion] = value;
-    setAnswers(newAnswers);
+    setAnswers(prev => ({
+      ...prev,
+      [currentQuestion]: value,
+    }));
 
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
@@ -43,27 +34,7 @@ const Assessment = () => {
     }
   };
 
-  const getResult = () => {
-    const total = answers.reduce((sum, answer) => sum + answer, 0);
-    if (total <= 8) return { 
-      level: "Low Risk", 
-      color: "emerald", 
-      message: "Your responses suggest minimal mental health concerns. You're doing great!",
-      gradient: "from-emerald-500 to-teal-500"
-    };
-    if (total <= 16) return { 
-      level: "Moderate Risk", 
-      color: "amber", 
-      message: "You may benefit from speaking with a mental health professional for additional support.",
-      gradient: "from-amber-500 to-orange-500"
-    };
-    return { 
-      level: "High Risk", 
-      color: "red", 
-      message: "We strongly recommend seeking professional help immediately. You're not alone in this journey.",
-      gradient: "from-red-500 to-pink-500"
-    };
-  };
+  const getResult = () => getAssessmentOutcome(Object.values(answers));
 
   if (showResults) {
     const result = getResult();
@@ -96,6 +67,11 @@ const Assessment = () => {
               </CardHeader>
               <CardContent className="pb-8">
                 <p className="text-xl md:text-2xl mb-8 leading-relaxed">{result.message}</p>
+                {result.answeredCount < result.totalQuestions && (
+                  <p className="text-lg mb-8 leading-relaxed opacity-90">
+                    You answered {result.answeredCount} of {result.totalQuestions} questions. Unanswered questions were left out of this score.
+                  </p>
+                )}
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                   <Link to="/chat">
                     <Button size="lg" className="bg-white text-gray-800 hover:bg-gray-100 px-8 py-4 text-xl font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
@@ -115,7 +91,7 @@ const Assessment = () => {
                     className="text-white hover:bg-white/20 px-8 py-4 text-xl font-bold rounded-2xl transition-all duration-300"
                     onClick={() => {
                       setCurrentQuestion(0);
-                      setAnswers([]);
+                      setAnswers({});
                       setShowResults(false);
                     }}
                   >
