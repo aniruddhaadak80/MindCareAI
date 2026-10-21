@@ -20,12 +20,11 @@ import ResultsScores from "@/components/mood-tests/ResultsScores";
 import ResultsInsights from "@/components/mood-tests/ResultsInsights";
 import ResultsRecommendations from "@/components/mood-tests/ResultsRecommendations";
 import ResultsActions from "@/components/mood-tests/ResultsActions";
-
-interface QuizQuestion {
-  id: string;
-  question: string;
-  options: string[];
-}
+import {
+  buildFallbackQuizQuestions,
+  parseQuizQuestions,
+  type QuizQuestion,
+} from "@/lib/moodQuiz";
 
 interface QuizResult {
   mood: string;
@@ -79,32 +78,22 @@ Make the questions specific to ${mood} mood and focus on understanding their men
       
       if (jsonMatch) {
         const quizData = JSON.parse(jsonMatch[0]);
-        setQuizQuestions(quizData.questions);
+        const questions = parseQuizQuestions(quizData);
+
+        if (questions.length === 0) {
+          throw new Error('Invalid response format');
+        }
+
+        setQuizQuestions(questions);
         setCurrentStep('quiz');
       } else {
         throw new Error('Invalid response format');
       }
     } catch (error) {
       console.error('Error generating quiz:', error);
-      // Fallback questions
-      const fallbackQuestions = [
-        {
-          id: "1",
-          question: `How would you rate your current ${mood} feelings?`,
-          options: ["Very mild", "Moderate", "Quite strong", "Very intense"]
-        },
-        {
-          id: "2",
-          question: "How long have you been feeling this way?",
-          options: ["Just today", "A few days", "About a week", "More than a week"]
-        },
-        {
-          id: "3",
-          question: "How is this affecting your daily activities?",
-          options: ["Not at all", "A little", "Quite a bit", "Severely"]
-        }
-      ];
-      setQuizQuestions(fallbackQuestions);
+      // Fallback questions: a complete quiz so the assessment stays usable
+      // when the AI is unavailable.
+      setQuizQuestions(buildFallbackQuizQuestions(mood));
       setCurrentStep('quiz');
     }
     setIsGenerating(false);
@@ -114,9 +103,13 @@ Make the questions specific to ${mood} mood and focus on understanding their men
     setIsGenerating(true);
     try {
       const answersText = Object.entries(answers)
-        .map(([questionId, answer], index) => 
-          `Q${parseInt(questionId)}: ${quizQuestions[index]?.question} - Answer: ${answer}`
-        ).join('\n');
+        .map(([questionId, answer]) => {
+          // Look the question up by id: a skipped question must not shift the
+          // question that is reported for the answers that follow it.
+          const question = quizQuestions.find(item => item.id === questionId);
+          return `Q${questionId}: ${question?.question ?? `Question ${questionId}`} - Answer: ${answer}`;
+        })
+        .join('\n');
 
       const { data, error } = await supabase.functions.invoke('chat', {
         body: {
