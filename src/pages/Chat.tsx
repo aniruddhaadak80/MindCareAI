@@ -23,6 +23,7 @@ interface Message {
 }
 
 const Chat = () => {
+  const [activeTab, setActiveTab] = useState("text-chat");
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -98,7 +99,7 @@ const Chat = () => {
           <ChatHeader />
 
           {/* Main Content with Tabs */}
-          <Tabs defaultValue="text-chat" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/90 backdrop-blur-md shadow-lg">
               <TabsTrigger value="text-chat" className="flex items-center gap-2">
                 <MessageCircle className="w-4 h-4" />
@@ -136,7 +137,7 @@ const Chat = () => {
 
             {/* Voice Chat Tab */}
             <TabsContent value="voice-chat">
-              <VoiceChat />
+              <VoiceChat onVoiceUnavailable={() => setActiveTab("text-chat")} />
             </TabsContent>
 
             {/* Motivation Tab */}
