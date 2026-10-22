@@ -9,6 +9,12 @@ import Footer from "@/components/Footer";
 import ScrollingBackground from "@/components/ScrollingBackground";
 import MentalHealthReport from "@/components/MentalHealthReport";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  FALLBACK_RECOMMENDATIONS,
+  normalizeInsights,
+  normalizeRecommendations,
+  normalizeScores,
+} from "@/lib/moodResults";
 
 // Import new components
 import MoodSelectionGrid from "@/components/mood-tests/MoodSelectionGrid";
@@ -157,9 +163,11 @@ Base scores on their responses, with higher scores indicating more concern for a
         const resultData = JSON.parse(jsonMatch[0]);
         setQuizResult({
           mood: selectedMood,
-          scores: resultData.scores,
-          recommendations: resultData.recommendations,
-          insights: resultData.insights
+          // The AI response is not validated by the edge function, so every
+          // field is normalised before it reaches the results components.
+          scores: normalizeScores(resultData.scores),
+          recommendations: normalizeRecommendations(resultData.recommendations),
+          insights: normalizeInsights(resultData.insights)
         });
         setCurrentStep('results');
       } else {
@@ -178,12 +186,7 @@ Base scores on their responses, with higher scores indicating more concern for a
           energy: 40,
           focus: 50
         },
-        recommendations: [
-          "Consider practicing deep breathing exercises daily",
-          "Try to maintain a regular sleep schedule",
-          "Connect with supportive friends or family",
-          "Consider speaking with a mental health professional"
-        ],
+        recommendations: [...FALLBACK_RECOMMENDATIONS],
         insights: "Based on your responses, you're experiencing some challenges but also showing resilience. Focus on self-care and don't hesitate to seek support when needed."
       });
       setCurrentStep('results');
